@@ -12,5 +12,7 @@ type Command interface {
 
 // Commands returns a list of all available commands.
 func Commands() []Command {
-	return nil
+	return []Command{
+		new(Init),
+	}
 }

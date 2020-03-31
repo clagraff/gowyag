@@ -5,7 +5,7 @@ import "testing"
 func TestCommands(t *testing.T) {
 	availableCommands := Commands()
 
-	expectedLen := 0
+	expectedLen := 1
 	actualLen := len(availableCommands)
 
 	if actualLen != expectedLen {
