@@ -1,0 +1,48 @@
+#!/bin/sh
+
+PROGRAM=$(basename $0)
+SUBCOMMAND=$1
+
+
+# Setting 'PATH=$PATH:.' makes it easier
+# to run these commands, as you could do
+# 'run <subcommand>' versus './run <subcommand>'
+
+# Sub commands:
+
+sub_help() {
+    echo "Usage: $PROGRAM <subcommand>"
+    echo ""
+    echo "This script is used to simplify common"
+    echo "  development tasks & commands."
+    echo ""
+    echo "Subcommands:"
+    echo "  build   Build app binary"
+    echo "  help    Display this help text"
+    echo "  test    Run all tests"
+}
+
+sub_build() {
+    go build -o wyag -i main.go && \
+    echo "created binary: ./wyag"
+}
+
+sub_test() {
+    go test -v ./...
+}
+
+
+case $SUBCOMMAND in
+    "" | "-h" | "--help")
+        sub_help
+        ;;
+    *)
+
+    shift
+    sub_$SUBCOMMAND $@
+    if [ $? = 127 ]; then
+        echo "Error: '$SUBCOMMAND' is not a known subcommand." >&2
+        echo "Run '$PROGRAM --help' for a list of known subcommands." >&2
+    fi
+    ;;
+esac
